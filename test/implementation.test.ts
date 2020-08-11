@@ -1,7 +1,8 @@
-import { Employee } from '../src/types';
+import { Employee, EmployeeDTO } from '../src/types';
 import {
   filterByBirthdayEmployees,
   sendBirthdayGreetings,
+  toEmployee,
 } from '../src/implementation';
 
 describe('Birthday Greeting Kata', () => {
@@ -50,5 +51,23 @@ describe('Birthday Greeting Kata', () => {
     expect(getEmployees).toHaveBeenCalledTimes(1);
     expect(sendGreetings).toHaveBeenNthCalledWith(1, employees[1]);
     expect(sendGreetings).toHaveBeenNthCalledWith(2, employees[3]);
+  });
+
+  it('converts an EmployeeDTO to an Employee', () => {
+    const employeeDTO: EmployeeDTO = {
+      first_name: 'Donald',
+      last_name: 'Duck',
+      email: 'donald.duck@foobar.com',
+      date_of_birth: '1934/05/13',
+    };
+
+    const employee = toEmployee(employeeDTO);
+
+    expect(employee).toEqual({
+      firstName: 'Donald',
+      lastName: 'Duck',
+      email: 'donald.duck@foobar.com',
+      dateOfBirth: new Date(1934, 4, 13),
+    });
   });
 });

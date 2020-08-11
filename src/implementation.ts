@@ -1,4 +1,4 @@
-import { SendBirthdayGreetings } from './functions';
+import { SendBirthdayGreetings, ToEmployee } from './functions';
 import { Employee } from 'types';
 
 const isBirthday = (today: Date, birthdate: Date) =>
@@ -17,3 +17,10 @@ export const sendBirthdayGreetings: SendBirthdayGreetings = (
     sendGreetings(employee)
   );
 };
+
+export const toEmployee: ToEmployee = employeeDTO => ({
+  firstName: employeeDTO.first_name,
+  lastName: employeeDTO.last_name,
+  dateOfBirth: new Date(employeeDTO.date_of_birth),
+  email: employeeDTO.email,
+});

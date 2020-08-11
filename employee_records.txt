@@ -1,0 +1,6 @@
+last_name, first_name, date_of_birth, email
+Doe, John, 1982/10/08, john.doe@foobar.com
+Ann, Mary, 1975/09/11, mary.ann@foobar.com
+Lero, Blau, 1999/02/24, blaulero@foobar.com
+Duck, Donald, 1934/05/13, donald.duck@foobar.com
+Jane, Mary, 2005/09/11, mary.ann@foobar.com
