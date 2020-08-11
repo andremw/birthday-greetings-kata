@@ -1,3 +1,6 @@
-import type { Person } from './types';
+import type { Employee } from './types';
 
-export type FilterByBirthdayPersons = (date: Date) => (persons: Person[]) => Person[];
+type GetEmployees = () => Employee[];
+type SendGreetings = (employee: Employee) => void;
+export type SendBirthdayGreetings =
+  (getEmployees: GetEmployees, sendGreetings: SendGreetings) => (date: Date) => void;
