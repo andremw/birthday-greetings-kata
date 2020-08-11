@@ -1,5 +1,8 @@
-import type { Employee } from '../src/types';
-import { filterByBirthdayEmployees, sendBirthdayGreetings } from '../src/implementation';
+import { Employee } from '../src/types';
+import {
+  filterByBirthdayEmployees,
+  sendBirthdayGreetings,
+} from '../src/implementation';
 
 describe('Birthday Greeting Kata', () => {
   const employees: Employee[] = [
@@ -26,7 +29,7 @@ describe('Birthday Greeting Kata', () => {
       lastName: 'Child',
       email: 'young@child.com',
       dateOfBirth: new Date(2001, 8, 15),
-    }
+    },
   ];
 
   it('filters list by the birthday employees', () => {
