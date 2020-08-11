@@ -1,3 +1,5 @@
+![CI](https://github.com/andremw/birthday-greetings-kata/workflows/CI/badge.svg?branch=master)
+
 # TSDX Bootstrap
 
 This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
