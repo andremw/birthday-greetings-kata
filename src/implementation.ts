@@ -1,4 +1,4 @@
-import { SendBirthdayGreetings, ToEmployee } from './functions';
+import { SendBirthdayGreetings, ToEmployee, ParseDTOString } from './functions';
 import { Employee } from 'types';
 
 const isBirthday = (today: Date, birthdate: Date) =>
@@ -13,9 +13,11 @@ export const sendBirthdayGreetings: SendBirthdayGreetings = (
   getEmployees,
   sendGreetings
 ) => (date: Date) => {
-  filterByBirthdayEmployees(date)(getEmployees()).map(employee =>
-    sendGreetings(employee)
-  );
+  return getEmployees()
+    .then(filterByBirthdayEmployees(date))
+    .then(employees =>
+      Promise.all(employees.map(employee => sendGreetings(employee)))
+    );
 };
 
 export const toEmployee: ToEmployee = employeeDTO => ({
@@ -24,3 +26,13 @@ export const toEmployee: ToEmployee = employeeDTO => ({
   dateOfBirth: new Date(employeeDTO.date_of_birth),
   email: employeeDTO.email,
 });
+
+export const parseDTOString: ParseDTOString = string => {
+  const [last_name, first_name, date_of_birth, email] = string.split(', ');
+  return {
+    last_name,
+    first_name,
+    date_of_birth,
+    email,
+  };
+};

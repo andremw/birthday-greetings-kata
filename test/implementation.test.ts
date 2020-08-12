@@ -3,6 +3,7 @@ import {
   filterByBirthdayEmployees,
   sendBirthdayGreetings,
   toEmployee,
+  parseDTOString,
 } from '../src/implementation';
 
 describe('Birthday Greeting Kata', () => {
@@ -41,12 +42,12 @@ describe('Birthday Greeting Kata', () => {
     expect(result).toEqual([employees[1], employees[3]]);
   });
 
-  it('loads records and calls greet for the birthday employees', () => {
-    const getEmployees = jest.fn(() => employees);
+  it('loads records and calls greet for the birthday employees', async () => {
+    const getEmployees = jest.fn(() => Promise.resolve(employees));
     const sendGreetings = jest.fn();
     const today = new Date(2020, 8, 15);
 
-    sendBirthdayGreetings(getEmployees, sendGreetings)(today);
+    await sendBirthdayGreetings(getEmployees, sendGreetings)(today);
 
     expect(getEmployees).toHaveBeenCalledTimes(1);
     expect(sendGreetings).toHaveBeenNthCalledWith(1, employees[1]);
@@ -68,6 +69,19 @@ describe('Birthday Greeting Kata', () => {
       lastName: 'Duck',
       email: 'donald.duck@foobar.com',
       dateOfBirth: new Date(1934, 4, 13),
+    });
+  });
+
+  it('converts a string to an EmployeeDTO', () => {
+    const string = 'Duck, Donald, 1934/05/13, donald.duck@foobar.com';
+
+    const dto = parseDTOString(string);
+
+    expect(dto).toEqual({
+      first_name: 'Donald',
+      last_name: 'Duck',
+      email: 'donald.duck@foobar.com',
+      date_of_birth: '1934/05/13',
     });
   });
 });

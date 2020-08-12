@@ -1,10 +1,11 @@
 import { Employee, EmployeeDTO } from './types';
 
-type GetEmployees = () => Employee[];
+type GetEmployees = () => Promise<Employee[]>;
 type SendGreetings = (employee: Employee) => void;
 export type SendBirthdayGreetings = (
   getEmployees: GetEmployees,
   sendGreetings: SendGreetings
-) => (date: Date) => void;
+) => (date: Date) => Promise<unknown>;
 
 export type ToEmployee = (employeeDTO: EmployeeDTO) => Employee;
+export type ParseDTOString = (line: string) => EmployeeDTO;
