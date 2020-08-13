@@ -1,7 +1,7 @@
 import { Employee, EmployeeDTO } from './types';
 
 type GetEmployees = () => Promise<Employee[]>;
-type SendGreetings = (employee: Employee) => void;
+type SendGreetings = (employee: Employee) => Promise<unknown>;
 export type SendBirthdayGreetings = (
   getEmployees: GetEmployees,
   sendGreetings: SendGreetings

@@ -1,4 +1,4 @@
-import { readFileLines } from './services';
+import { readFileLines, sendGreetings } from './services';
 import { EmployeeDTO } from './types';
 import { sendBirthdayGreetings, toEmployee } from './implementation';
 
@@ -11,8 +11,4 @@ const toEmployeeList = (employeeList: EmployeeDTO[]) =>
 
 const getEmployees = () => readFileLines(employeesFile).then(toEmployeeList);
 
-const sendGreetings = (data: any) => {
-  console.log('sending greetings to ', data);
-};
-
-sendBirthdayGreetings(getEmployees, sendGreetings as any)(today);
+sendBirthdayGreetings(getEmployees, sendGreetings)(today);
