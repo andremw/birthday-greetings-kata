@@ -7,6 +7,12 @@ import {
 } from '../src/implementation';
 
 describe('Birthday Greeting Kata', () => {
+  const leapYearEmployee: Employee = {
+    dateOfBirth: new Date(2000, 1, 29),
+    email: 'different@yep.com',
+    firstName: 'Im',
+    lastName: 'Different',
+  };
   const employees: Employee[] = [
     {
       firstName: 'Zé',
@@ -32,6 +38,7 @@ describe('Birthday Greeting Kata', () => {
       email: 'young@child.com',
       dateOfBirth: new Date(2001, 8, 15),
     },
+    leapYearEmployee,
   ];
 
   it('filters list by the birthday employees', () => {
@@ -43,7 +50,7 @@ describe('Birthday Greeting Kata', () => {
   });
 
   it('loads records and calls greet for the birthday employees', async () => {
-    const getEmployees = jest.fn(() => Promise.resolve(employees));
+    const getEmployees = jest.fn(async () => employees);
     const sendGreetings = jest.fn();
     const today = new Date(2020, 8, 15);
 
@@ -52,6 +59,36 @@ describe('Birthday Greeting Kata', () => {
     expect(getEmployees).toHaveBeenCalledTimes(1);
     expect(sendGreetings).toHaveBeenNthCalledWith(1, employees[1]);
     expect(sendGreetings).toHaveBeenNthCalledWith(2, employees[3]);
+  });
+
+  it('for people that were born on February 29th, sends greetings on February 28th', async () => {
+    const getEmployees = jest.fn(async () => [leapYearEmployee]);
+    const sendGreetings = jest.fn();
+
+    const today = new Date(2019, 1, 28);
+
+    await sendBirthdayGreetings(getEmployees, sendGreetings)(today);
+    expect(sendGreetings).toHaveBeenCalledWith(leapYearEmployee);
+  });
+
+  it('on leap years, does not send greetings on February 28th for employees born on February 29th', async () => {
+    const getEmployees = jest.fn(async () => [leapYearEmployee]);
+    const sendGreetings = jest.fn();
+
+    const today = new Date(2020, 1, 28);
+
+    await sendBirthdayGreetings(getEmployees, sendGreetings)(today);
+    expect(sendGreetings).not.toHaveBeenCalledWith(leapYearEmployee);
+  });
+
+  it('on leap years, sends greetings for birthday employees on February 29th', async () => {
+    const getEmployees = jest.fn(async () => [leapYearEmployee]);
+    const sendGreetings = jest.fn();
+
+    const today = new Date(2020, 1, 29);
+
+    await sendBirthdayGreetings(getEmployees, sendGreetings)(today);
+    expect(sendGreetings).toHaveBeenCalledWith(leapYearEmployee);
   });
 
   it('converts an EmployeeDTO to an Employee', () => {
