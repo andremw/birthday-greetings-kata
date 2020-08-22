@@ -12,6 +12,7 @@ module Email: Email = {
   type error =
     | EmptyString
     | InvalidEmail;
+
   let create = str =>
     if (str == "") {
       Error(EmptyString);
@@ -20,8 +21,7 @@ module Email: Email = {
     } else {
       Ok(str);
     };
-  // let r = Str.regexp "hello \\([A-Za-z]+\\)" in
-  //   Str.replace_first r "\\1" "hello world"
+
   let value = str => str;
 };
 
