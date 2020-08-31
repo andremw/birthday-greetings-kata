@@ -1,5 +1,4 @@
 open Types;
-open Functions;
 
 let sendGreetings = email => {
   switch (email) {
